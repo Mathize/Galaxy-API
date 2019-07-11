@@ -59,11 +59,26 @@ const crudGalaxias = (app) => {
   		});
   	});
   }
+  
+   //DELETE - Delete a Cerveceria with specified ID
+  deleteGalaxias = function(req, res) {
+  	Galaxia.findById(req.params.id, function(err, galaxias) {
+  		galaxias.remove(function(err) {
+  			if(!err) {
+  				console.log('Removed');
+  			} else {
+  				console.log('ERROR: ' + err);
+  			}
+        res.send(galaxias);
+  		})
+  	});
+  }
 
     //Rutas de la API, asociadas a una función
     app.get('/galaxias', findAllGalaxias); 
     app.post('/galaxias', addGalaxia);
     app.put('/galaxias/:id', updateGalaxias) //actualiza una galaxia
+    app.delete('/galaxias/:id', deleteGalaxias); //Elimina una galaxia
 }
 
 module.exports = crudGalaxias;
